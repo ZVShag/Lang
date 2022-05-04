@@ -89,7 +89,7 @@ int main()
         in.close();
         for (int i = 0; i < new_lang.size(); i++)
         {
-            cout << endl << "eng: " << new_lang[i].eng << endl << "rus: " << new_lang[i].rus << endl;
+            cout << endl << "eng: " << new_lang[i].eng << endl << "rus: " << new_lang[i].rus ;
         }
         return 0;
     }
