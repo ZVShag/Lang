@@ -57,14 +57,11 @@ int main()
             if (b)
             {
                 lang.push_back(man);
-                ofstream out("lang.txt");
+                ofstream out("lang.txt",ios::app);
                 try
                 {
-
-                    for (int i = 0; i < lang.size(); i++)
-                    {
-                        out << "{" << endl << "eng: " << lang[i].eng << endl << "rus: " << lang[i].rus << endl << "}" << endl;
-                    }
+                    out  <<  "eng: " << man.eng << endl << "rus: " << man.rus  ;
+                    
 
                     out.close();
                 }
@@ -82,14 +79,13 @@ int main()
         {
             while (in >> eng >> rus)
             {
-                if ((eng.length() > 1) && (rus.length() > 1) && ((eng != "eng:") && (rus != "rus:")))
                     new_lang.push_back(Lang(eng, rus));
             }
         }
         in.close();
         for (int i = 0; i < new_lang.size(); i++)
         {
-            cout << endl << "eng: " << new_lang[i].eng << endl << "rus: " << new_lang[i].rus ;
+            cout << endl << new_lang[i].eng<<endl<<new_lang[i].rus<<endl;
         }
         return 0;
     }
