@@ -1,20 +1,102 @@
-﻿// Lang.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
+﻿#include <iostream>
+#include <fstream>
+#include <vector>
+#include<Windows.h>
+#include<thread>
+using namespace std;
+/*Создать структуру англо-русский словарь. Запись в файл добавление слов, поиск перевода.
+{
 
-#include <iostream>
+     eng: cat;
+     rus: кошка;
+    }
+}
+*/
 
+struct Lang
+{
+    string eng;
+    string rus;
+    Lang(string s, string r) : eng(s), rus(r)
+    {}
+};
 int main()
 {
-    std::cout << "Hello World!\n";
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+    vector<Lang> lang = {};
+    Lang man("cat", "кошка");
+    lang.push_back(man);
+    while (true)
+    {
+        cout << "If you want add: press 1 " << endl;
+        cout << "If you want find: press 2 " << endl;
+        cout << "If you want stop: press 3 " << endl;
+
+        int c;
+        cin >> c;
+        if (c == 3)
+            break;
+        if (c == 1)
+        {
+            cout << endl << "Input eng: " << endl;
+            cin >> man.eng;
+            cout << endl << "Input rus: " << endl;
+            cin >> man.rus;
+
+            bool b = true;
+            for (int i = 0; i < lang.size() - 1; i++)
+            {
+                if (lang[i].eng == man.eng)
+                {
+                    b = false;
+                    cout << "Такое слово уже есть в словаре!!!! ";
+                    break;
+                }
+            }
+            if (b)
+            {
+                lang.push_back(man);
+                ofstream out("lang.txt");
+                try
+                {
+
+                    for (int i = 0; i < lang.size(); i++)
+                    {
+                        out << "{" << endl << "eng: " << lang[i].eng << endl << "rus: " << lang[i].rus << endl << "}" << endl;
+                    }
+
+                    out.close();
+                }
+                catch (...)
+                {
+                    cout << "404";
+                }
+            }
+        }
+        vector<Lang> new_lang;
+        string rus;
+        string eng;
+        ifstream in("lang.txt");
+        if (in.is_open())
+        {
+            while (in >> eng >> rus)
+            {
+                if ((eng.length() > 1) && (rus.length() > 1) && ((eng != "eng:") && (rus != "rus:")))
+                    new_lang.push_back(Lang(eng, rus));
+            }
+        }
+        in.close();
+        for (int i = 0; i < new_lang.size(); i++)
+        {
+            cout << endl << "eng: " << new_lang[i].eng << endl << "rus: " << new_lang[i].rus << endl;
+        }
+        return 0;
+    }
+
 }
-
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
-
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
+template <typename T>
+void find(T* vect)
+{
+    cout << "Сакс " << vect.eng << endl << " Великодержаный " << vect.rus;
+}
