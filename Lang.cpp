@@ -35,6 +35,20 @@ int main()
 
         int c;
         cin >> c;
+        vector<Lang> new_lang;
+        string rus;
+        string eng;
+        ifstream in("lang.txt");
+        if (in.is_open())
+        {
+            while (in >> eng >> rus)
+            {
+                new_lang.push_back(Lang(eng, rus));
+            }
+        }
+        in.close();
+        for (int i = 0; i < new_lang.size(); i++)
+            cout << new_lang[i].rus << endl;
         if (c == 3)
             break;
         if (c == 1)
@@ -71,28 +85,40 @@ int main()
                 }
             }
         }
-        vector<Lang> new_lang;
-        string rus;
-        string eng;
-        ifstream in("lang.txt");
-        if (in.is_open())
+        if (c == 2)
         {
-            while (in >> eng >> rus)
+            cout << "Введите слово для поиска: ";
+            string search;
+            cin >> search;
+            for (int i = 0; i < new_lang.size(); i++)
             {
-                    new_lang.push_back(Lang(eng, rus));
+                if (new_lang[i].eng == search)
+                {
+                    cout << "Перевод:";
+                    cout << new_lang[i].rus << endl;
+                    break;
+                }
+
+                if (new_lang[i].rus == search)
+                {
+                    cout << "Перевод:";
+                    cout << new_lang[i].eng << endl;
+                    break;
+                }
             }
+
+
         }
-        in.close();
-        for (int i = 0; i < new_lang.size(); i++)
-        {
-            cout << endl << new_lang[i].eng<<endl<<new_lang[i].rus<<endl;
-        }
+        
+        
         return 0;
     }
 
 }
-template <typename T>
-void find(T* vect)
+
+void find(vector<Lang>* vect,string voc)
 {
-    cout << "Сакс " << vect.eng << endl << " Великодержаный " << vect.rus;
+    
+
+    
 }
